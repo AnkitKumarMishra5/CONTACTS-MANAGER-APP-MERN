@@ -38,7 +38,7 @@ const NewContact = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Add New Contact
+          {!props.editContact ? 'Add New Contact' : `Edit Contact - ${newContact.name}`}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
