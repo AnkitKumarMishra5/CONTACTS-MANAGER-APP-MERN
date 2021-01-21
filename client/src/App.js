@@ -13,6 +13,7 @@ import axios from "axios";
 
 const App = () => {
   const [contacts, setContacts] = useState([]);
+  const [data, setData] = useState(false);
 
   useEffect(() => {
     axios
@@ -23,18 +24,42 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    console.log(data);
+  }, [data]);
 
-  const updateContacts = (newContact) => {
+  const updateContacts = (newContact, id) => {
+    !id ?
     axios
       .post("http://localhost:5000/api/contacts", newContact)
       .then((res) => {
         console.log(res.data);
-        setContacts([...contacts, newContact])
+        setData(!data)
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+    :
+    axios
+      .patch(`http://localhost:5000/api/contacts/${id}`, newContact)
+      .then((res) => {
+        console.log(res.data);
+        setData(!data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const deleteContact = (id) =>{
+    axios
+      .delete(`http://localhost:5000/api/contacts/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        setData(!data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   return (
@@ -45,7 +70,7 @@ const App = () => {
             <Route
               exact
               path="/"
-              render={() => <Contacts contacts={contacts} updateContacts={updateContacts} />}
+              render={() => <Contacts contacts={contacts} updateContacts={updateContacts} deleteContact={deleteContact} />}
             />
           </Switch>
         </Router>

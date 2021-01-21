@@ -10,12 +10,13 @@ const NewContact = (props) => {
   });
 
   useEffect(() => {
-    console.log(newContact);
-  }, [newContact]);
+    setNewContact(props.editContact);
+    console.log(props.editContact);
+  }, [props.editContact]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.props.updateContacts(newContact);
+    props.props.updateContacts(newContact, props.editContact._id);
   };
 
   return (
@@ -39,7 +40,7 @@ const NewContact = (props) => {
               name="name"
               type="text"
               placeholder="Name"
-              value={newContact.user}
+              value={newContact.name}
               onInput={(e) =>
                 setNewContact({ ...newContact, name: e.target.value })
               }
@@ -81,7 +82,7 @@ const NewContact = (props) => {
             <Form.Check
               type="checkbox"
               label="Set as Favourite"
-              value={newContact.favourite}
+              checked={newContact.favourite}
               onInput={(e) =>
                 setNewContact({
                   ...newContact,

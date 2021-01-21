@@ -11,6 +11,12 @@ const Contacts = (props) => {
   const contacts = props.contacts;
 
   const [modalShow, setModalShow] = useState(false);
+  const [editContact, setEditContact] = useState({});
+
+  const handleEdit = (contact) => {
+    setEditContact(contact);
+    setModalShow(true)
+  }
 
   return (
     <>
@@ -36,8 +42,9 @@ const Contacts = (props) => {
           </div>
           <NewContact
           show={modalShow}
-          onHide={() => setModalShow(false)}
+          editContact = {editContact}
           props={props}
+          onHide={() => setModalShow(false)}
           />
         </Col>
       </Row>
@@ -47,7 +54,11 @@ const Contacts = (props) => {
             {contacts.length ? (
               contacts.map((contact) => (
                   <div key={contact._id}>
-                      <Contact contact={contact}/>
+                      <Contact
+                      contact={contact}
+                      props={props}
+                      handleEdit={handleEdit}
+                      />
                   </div>
               ))
             ) : (
