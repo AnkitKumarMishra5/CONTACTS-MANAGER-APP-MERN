@@ -24,7 +24,7 @@ const Contacts = (props) => {
       <Row className="justify-content-center">
         <Col md={6} xs={12} style={{ display: "flex" }}>
           <div className="mr-auto">
-            <Button className="nav-btn-1" size="sm">
+            <Button className="nav-btn-1" size="sm" onClick={props.handleAll}>
               All Contacts
             </Button>
             <Button className="nav-btn-1" size="sm" onClick={props.handleFav}>
