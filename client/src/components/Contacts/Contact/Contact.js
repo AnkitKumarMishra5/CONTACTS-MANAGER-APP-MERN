@@ -1,18 +1,12 @@
-import {
-  Card,
-  Accordion,
-  Button,
-  Form,
-  Table,
-} from "react-bootstrap";
+import { Card, Accordion, Button, Form, Table } from "react-bootstrap";
 
-const Contact = () => {
+const Contact = ({contact}) => {
   return (
-    <Accordion eventKey="0">
+    <Accordion>
       <Card>
         <Accordion.Toggle as={Card.Header} eventKey="0">
           <h5 style={{ float: "left" }} className="mb-0 lead">
-            Ankit Kumar
+            {contact.name}
           </h5>
           <Form className="text-right">
             <Form.Check
@@ -20,6 +14,7 @@ const Contact = () => {
               type="switch"
               id="custom-switch"
               label="Favourites"
+              checked={contact.favourite}
             />
           </Form>
         </Accordion.Toggle>
@@ -30,11 +25,11 @@ const Contact = () => {
                 <tbody>
                   <tr>
                     <td>Email</td>
-                    <td className="values email">ank@gmail.com</td>
+                    <td>{contact.email}</td>
                   </tr>
                   <tr>
                     <td>Mobile No.:</td>
-                    <td className="values">7676767676</td>
+                    <td>{contact.mobile}</td>
                   </tr>
                 </tbody>
               </Table>

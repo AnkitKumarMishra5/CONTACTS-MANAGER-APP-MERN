@@ -9,7 +9,9 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 
 import User from './models/User.js';
+
 import userRoutes from './routes/users.js';
+import contactRoutes from './routes/contacts.js';
 
 const app = express();
 dotenv.config();
@@ -32,6 +34,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use('/api/users', userRoutes);
+app.use('/api/contacts', contactRoutes);
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT;
