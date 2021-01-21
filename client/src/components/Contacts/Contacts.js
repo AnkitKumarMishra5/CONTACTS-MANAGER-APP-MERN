@@ -1,29 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Row, Col, Button, Accordion, Spinner } from "react-bootstrap";
 
 import "./Contacts.css";
 
-import axios from "axios";
-
 import NewContact from "../NewContact/NewContact";
 import Contact from "./Contact/Contact";
 
-const Contacts = () => {
+const Contacts = (props) => {
+  const contacts = props.contacts;
+
   const [modalShow, setModalShow] = useState(false);
-
-  const [contacts, setContacts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/contacts")
-      .then((res) => {
-        setContacts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   return (
     <>
@@ -47,20 +34,26 @@ const Contacts = () => {
               New Contact
             </Button>
           </div>
-          <NewContact show={modalShow} onHide={() => setModalShow(false)} />
+          <NewContact
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          props={props}
+          />
         </Col>
       </Row>
       <Row className="justify-content-center">
         <Col md={6} xs={12} className="contacts-section">
-            <Accordion>
+          <Accordion>
             {contacts.length ? (
               contacts.map((contact) => (
-                <Contact key={contact._id} contact={contact} />
+                  <div key={contact._id}>
+                      <Contact contact={contact}/>
+                  </div>
               ))
             ) : (
               <Spinner animation="grow" variant="primary" />
             )}
-            </Accordion>
+          </Accordion>
         </Col>
       </Row>
     </>

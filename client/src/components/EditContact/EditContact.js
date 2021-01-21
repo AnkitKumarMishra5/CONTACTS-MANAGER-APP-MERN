@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 
-const NewContact = (props) => {
-  const [newContact, setNewContact] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    favourite: false,
+const EditContact = (props) => {
+  const editContact = props.editContact;
+
+  const [updatedContact, setUpdatedContact] = useState({
+    name: editContact.name,
+    email: editContact.email,
+    mobile: editContact.mobile,
+    favourite: editContact.favourite,
   });
 
   useEffect(() => {
-    console.log(newContact);
-  }, [newContact]);
+    console.log(updatedContact);
+  }, [updatedContact]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.props.updateContacts(newContact);
   };
 
   return (
@@ -27,7 +28,7 @@ const NewContact = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Add New Contact
+          Update Contact - {updatedContact.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -39,9 +40,9 @@ const NewContact = (props) => {
               name="name"
               type="text"
               placeholder="Name"
-              value={newContact.user}
+              value={updatedContact.name}
               onInput={(e) =>
-                setNewContact({ ...newContact, name: e.target.value })
+                setUpdatedContact({ ...updatedContact, name: e.target.value })
               }
             />
           </Form.Group>
@@ -57,9 +58,12 @@ const NewContact = (props) => {
                 name="email"
                 type="email"
                 placeholder="Email"
-                value={newContact.email}
+                value={updatedContact.email}
                 onInput={(e) =>
-                  setNewContact({ ...newContact, email: e.target.value })
+                  setUpdatedContact({
+                    ...updatedContact,
+                    email: e.target.value,
+                  })
                 }
               />
             </InputGroup>
@@ -71,9 +75,9 @@ const NewContact = (props) => {
               name="mobile"
               type="text"
               placeholder="Mobile"
-              value={newContact.mobile}
+              value={updatedContact.mobile}
               onInput={(e) =>
-                setNewContact({ ...newContact, mobile: e.target.value })
+                setUpdatedContact({ ...updatedContact, mobile: e.target.value })
               }
             />
           </Form.Group>
@@ -81,11 +85,11 @@ const NewContact = (props) => {
             <Form.Check
               type="checkbox"
               label="Set as Favourite"
-              value={newContact.favourite}
+              checked={updatedContact.favourite}
               onInput={(e) =>
-                setNewContact({
-                  ...newContact,
-                  favourite: !newContact.favourite,
+                setUpdatedContact({
+                  ...updatedContact,
+                  favourite: !updatedContact.favourite,
                 })
               }
             />
@@ -101,4 +105,4 @@ const NewContact = (props) => {
     </Modal>
   );
 };
-export default NewContact;
+export default EditContact;

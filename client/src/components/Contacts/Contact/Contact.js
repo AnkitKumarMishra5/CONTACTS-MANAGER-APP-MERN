@@ -1,6 +1,18 @@
+import {useState} from 'react';
 import { Card, Accordion, Button, Form, Table } from "react-bootstrap";
 
-const Contact = ({contact}) => {
+import EditContact from '../../EditContact/EditContact';
+
+const Contact = (props) => {
+  const contact = props.contact;
+
+  const [modalShow, setModalShow] = useState(false);
+
+  const handleEdit = (contact) =>{
+    console.log(contact);
+    setModalShow(true);
+  }
+
   return (
     <Accordion>
       <Card>
@@ -33,9 +45,18 @@ const Contact = ({contact}) => {
                   </tr>
                 </tbody>
               </Table>
-              <Button className="acco-buttons" size="sm">
+              <Button
+                className="acco-buttons"
+                size="sm"
+                onClick={handleEdit}
+              >
                 Edit
               </Button>
+              <EditContact
+                show={modalShow}
+                editContact={contact}
+                onHide={() => setModalShow(false)}
+              />
               <Button className="acco-buttons" size="sm">
                 Delete
               </Button>
