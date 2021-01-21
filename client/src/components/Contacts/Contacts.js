@@ -27,7 +27,7 @@ const Contacts = (props) => {
             <Button className="nav-btn-1" size="sm">
               All Contacts
             </Button>
-            <Button className="nav-btn-1" size="sm">
+            <Button className="nav-btn-1" size="sm" onClick={props.handleFav}>
               Favourites
             </Button>
           </div>

@@ -62,6 +62,17 @@ const App = () => {
       })
   }
 
+  const handleFav = () =>{
+    axios
+      .get("http://localhost:5000/api/contacts/fav")
+      .then((res) => {
+        setContacts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <>
       <Container fluid>
@@ -70,7 +81,7 @@ const App = () => {
             <Route
               exact
               path="/"
-              render={() => <Contacts contacts={contacts} updateContacts={updateContacts} deleteContact={deleteContact} />}
+              render={() => <Contacts contacts={contacts} updateContacts={updateContacts} deleteContact={deleteContact} handleFav={handleFav} />}
             />
           </Switch>
         </Router>

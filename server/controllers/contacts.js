@@ -4,7 +4,16 @@ import Contact from "../models/Contact.js";
 
 export const getContacts = async (req, res) => { 
     try {
-        const contacts = await Contact.find();      
+        const contacts = await Contact.find().sort('name');      
+        res.status(200).json(contacts);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const getFavContacts = async (req, res) => { 
+    try {
+        const contacts = await Contact.find({'favourite':'true'});      
         res.status(200).json(contacts);
     } catch (error) {
         res.status(404).json({ message: error.message });

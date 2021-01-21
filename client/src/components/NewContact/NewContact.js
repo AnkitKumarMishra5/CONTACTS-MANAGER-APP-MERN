@@ -8,6 +8,9 @@ const NewContact = (props) => {
     mobile: "",
     favourite: false,
   });
+  const [nameError, setNameError] = useState(true);
+  const [emailError, setEmailError] = useState(true);
+  const [mobileError, setMobileError] = useState(true);
 
   useEffect(() => {
     setNewContact(props.editContact);
@@ -16,7 +19,14 @@ const NewContact = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    props.onHide();
     props.props.updateContacts(newContact, props.editContact._id);
+    setNewContact({
+      name: "",
+      email: "",
+      mobile: "",
+      favourite: false,
+    })
   };
 
   return (
@@ -41,28 +51,36 @@ const NewContact = (props) => {
               type="text"
               placeholder="Name"
               value={newContact.name}
-              onInput={(e) =>
-                setNewContact({ ...newContact, name: e.target.value })
+              onChange={(e) =>
+                e.target.value !== '' ?
+                (setNewContact({ ...newContact, name: e.target.value }), setNameError(false)):
+                setNameError(true)
               }
             />
+            {nameError &&
+            <Form.Text className="text-muted">
+              Invalid Name! Contact won't be saved!
+            </Form.Text>}
           </Form.Group>
           <Form.Group>
             <Form.Label>Email</Form.Label>
             <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-              </InputGroup.Prepend>
               <Form.Control
-                aria-describedby="inputGroupPrepend"
+                style={{width: "100%"}}
                 required
                 name="email"
                 type="email"
                 placeholder="Email"
                 value={newContact.email}
-                onInput={(e) =>
-                  setNewContact({ ...newContact, email: e.target.value })
+                onChange={(e) =>
+                  /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/.test(e.target.value) ? 
+                  (setNewContact({ ...newContact, email: e.target.value }), setEmailError(false)): setEmailError(true)
                 }
               />
+              {emailError &&
+              <Form.Text className="text-muted" >
+                Invalid Email! Contact won't be saved!
+              </Form.Text>}
             </InputGroup>
           </Form.Group>
           <Form.Group>
@@ -73,10 +91,15 @@ const NewContact = (props) => {
               type="text"
               placeholder="Mobile"
               value={newContact.mobile}
-              onInput={(e) =>
-                setNewContact({ ...newContact, mobile: e.target.value })
+              onChange={(e) =>
+                /^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/.test(e.target.value) ?
+                (setNewContact({ ...newContact, mobile: e.target.value }), setMobileError(false)) : setMobileError(true)
               }
             />
+            {mobileError &&
+            <Form.Text className="text-muted">
+              Invalid Mobile No.! Contact won't be saved!
+            </Form.Text>}
           </Form.Group>
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check
@@ -91,7 +114,7 @@ const NewContact = (props) => {
               }
             />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={props.onHide}>
+          <Button variant="primary" type="submit">
             Submit
           </Button>
         </Form>
